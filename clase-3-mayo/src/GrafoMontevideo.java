@@ -41,11 +41,12 @@ public class GrafoMontevideo
         this.largo++;
     }
     private int buscarIndice(Esquina esq){
-        for (int i = 0; i < vertices.length; i++) {
+        for (int i = 0; i < largo; i++) {
             if(vertices[i].equals(esq)){
                 return i;
             }
         }
+
         return -1;
     }
 
@@ -131,8 +132,29 @@ public class GrafoMontevideo
 
     }
 
+    @Override
+    public String toString(){
+        StringBuilder sb=new StringBuilder("digraph G{\n");
+        for (int i = 0; i < this.vertices.length; i++) {
+            if(vertices[i]!=null){
+                sb.append(String.format("v_%s[label=\"%s\"];\n",i,vertices[i].toString()));
+            }
+            for (int j = 0; j < this.maxVertices; j++) {
+                if(aristas[i][j].existe){
+                    sb.append(String.format("v_%s -> v_%s[label=\"%s\"];\n",i,j,aristas[i][j].cuadra.getMetros()));
+                }
+            }
+        }
+        sb.append("}");
+        return sb.toString();
+    }
 
     private boolean existe(int idxOrigen, int idxDestino) {
         return aristas[idxOrigen][idxDestino].existe;
+    }
+
+    public void dijkstra(Esquina e,Esquina d,Visitor<Esquina> visitor){
+
+
     }
 }

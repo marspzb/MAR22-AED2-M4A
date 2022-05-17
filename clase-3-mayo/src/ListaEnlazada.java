@@ -41,4 +41,14 @@ public class ListaEnlazada<T> {
         return inicio==null;
     }
 
+
+    public void visitar(Visitor<T> visitor){
+        Nodo n =inicio;
+        while (n!=null){
+           visitor.visitar(n.dato);
+            n=n.sig;
+
+
+        }
+    }
 }
