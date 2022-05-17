@@ -1,4 +1,9 @@
+import java.util.Objects;
+
 public class ListaEnlazada<T> {
+
+
+
 
     private  class Nodo {
         private T dato;
@@ -26,4 +31,14 @@ public class ListaEnlazada<T> {
         }
         System.out.println();
     }
+    public T eliminarInicio() {
+        Objects.requireNonNull(inicio);
+        T aRetornar=this.inicio.dato;
+        this.inicio=inicio.sig;
+        return aRetornar;
+    }
+    public boolean esVacia() {
+        return inicio==null;
+    }
+
 }

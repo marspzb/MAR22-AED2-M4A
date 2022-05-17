@@ -1,3 +1,6 @@
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class GrafoMontevideo
 {
 
@@ -69,6 +72,65 @@ public class GrafoMontevideo
         return adyacentes;
 
     }
+    public ListaEnlazada<Esquina> esquinasIncidentes(Esquina destino){
+        ListaEnlazada<Esquina> incidentes=new ListaEnlazada<>();
+        int idxDestino=buscarIndice(destino);//columna;
+        for (int origen = 0; origen < maxVertices; origen++) {
+            if(aristas[origen][idxDestino].existe){
+                incidentes.agregarInicio(vertices[origen]);
+            }
+        }
+        return incidentes;
+    }
+    public void dfs(Esquina origen,Visitor<Esquina> visitador){
+        Pila<Integer> frontera=new Pila<Integer>();
+        int idxOrigen=buscarIndice(origen);
+        boolean [] visitados=new boolean[maxVertices];
+        frontera.push(idxOrigen);
+        while(!frontera.esVacia()){
+            int verticeAExplorar=frontera.pop();
+
+            if(!visitados[verticeAExplorar]){
+                visitador.visitar(vertices[verticeAExplorar]);
+
+                visitados[verticeAExplorar]=true;
+                //foreach de los adyacentes !
+                for (int destino = 0; destino < maxVertices; destino++) {
+                    if(aristas[verticeAExplorar][destino].existe){
+                        frontera.push(destino);
+                    }
+                }
+            }
+
+
+        }
+
+    }
+    public void bfs(Esquina origen,Visitor<Esquina> visitador){
+        Queue<Integer> frontera=new ArrayDeque<>();//IMPERDONABLE EN EL OBLIGATORIO
+        int idxOrigen=buscarIndice(origen);
+        boolean [] visitados=new boolean[maxVertices];
+        frontera.add(idxOrigen);//push
+        while(!frontera.isEmpty()){//es vacia
+            int verticeAExplorar=frontera.poll();//pop
+
+            if(!visitados[verticeAExplorar]){
+                visitador.visitar(vertices[verticeAExplorar]);
+
+                visitados[verticeAExplorar]=true;
+                //foreach de los adyacentes !
+                for (int destino = 0; destino < maxVertices; destino++) {
+                    if(aristas[verticeAExplorar][destino].existe){
+                        frontera.add(destino);
+                    }
+                }
+            }
+
+
+        }
+
+    }
+
 
     private boolean existe(int idxOrigen, int idxDestino) {
         return aristas[idxOrigen][idxDestino].existe;

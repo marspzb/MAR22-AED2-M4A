@@ -26,8 +26,16 @@ public class Main {
         g.agregarArista(c,d,new Cuadra(2));
 
 
-        g.esquinasAdyacentes(a).listar();
+       // g.esquinasAdyacentes(a).listar();
+        //g.esquinasIncidentes(b).listar();
 
+        g.bfs(a, new Visitor<Esquina>() {
+            @Override
+            public void visitar(Esquina vertice) {
+                System.out.print(vertice+",");
+            }
+        });
+        System.out.println();
 
     }
 }
